@@ -21,14 +21,15 @@ a wee Content Management System for site admins, web developers and editors
 <img src="https://raw.githubusercontent.com/peteee/weeCMS/master/screenshots/Screen%20Shot%202021-04-21%20at%2010.55.11.png" width="380" alt="Screen shot 1"/>
 
 ## Login | Don't forget to change this :P:
-login: WeeCMSAdmin
-pass: letmein
+- login: WeeCMSAdmin
+- pass: letmein
 
 ## User activation
-...
+<img src="https://raw.githubusercontent.com/peteee/weeCMS/master/screenshots/Selection_816.png" width="260">
 
 ## Good to know
 - Uses ZURB's Foundation: https://get.foundation/sites.html
+- import SQL to start from _db/wee-cms.sql
 
 Copyright © 2017 WeeCMS Name & Logo by Peter Oberlaender | wayoutofline.net
 
