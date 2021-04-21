@@ -1,0 +1,48 @@
+@charset "UTF-8";
+/**
+ * WeeCMS
+ * Custom Styles
+ *
+ * Built on top of Foundation for Sites by ZURB
+ */
+input[type=text], input[type=password], input[type=submit], input[type=email] {
+  width: 280px;
+  border-radius:7px;
+  -webkit-border-radius:7px;
+}
+input[type=checkbox] {
+  border-radius:7px;
+  -webkit-border-radius:7px;
+}
+.symbol_error {
+  background: url(../img/error.png) no-repeat;
+}
+.symbol_message {
+  background: url(../img/info.png) no-repeat;
+}
+.symbol_error, .symbol_message{
+  background-position:14px 44%;
+  padding-left: 41px;
+}
+h1, h2, h3, h4, h5, h6{
+  font-weight:bold;
+}
+.radius {
+  border-radius:7px;
+  -webkit-border-radius:7px;
+}
+legend{
+  font-weight: bold;
+}
+#wee-cms-content{
+  min-height: 1600px;
+}
+#footer{
+  min-height: 300px;
+  background: #CCC;
+}
+#wee-logo{
+  width: 80px;
+  height: auto;
+  display: block;
+}

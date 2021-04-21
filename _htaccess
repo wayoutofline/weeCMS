@@ -1,0 +1,125 @@
+# WeeCMS htaccess #
+###################
+
+#AddHandler php70-cgi .php
+
+#Secure Cookies (https)
+#php_value session.cookie_httponly 1
+#php_value session.cookie_secure 1
+#php_value session.use_only_cookies 1
+
+#http://stackoverflow.com/questions/24129201/add-secure-and-httponly-flags-to-every-set-cookie-response-in-apache-httpd
+#Not sure if this does anything...
+#Header always edit Set-Cookie (.*) "$1; HTTPOnly"
+#Header always edit Set-Cookie (.*) "$1; Secure"
+
+#php_value allow_call_time_pass_reference 0
+php_value allow_url_fopen 0
+php_value allow_url_include 0
+
+#Error Docs
+#ErrorDocument 401 401.html
+#ErrorDocument 403 403.html
+#ErrorDocument 404 404.html
+#ErrorDocument 500 500.html
+
+#Index files
+#DirectoryIndex index.php index.html home.html
+DirectoryIndex index.php
+
+#php_value allow_url_fopen Off
+#php_flag safe_mode Off DEPRECATED
+php_value max_execution_time 1000
+php_value max_input_time 1000
+php_value upload_max_filesize 100M
+php_value post_max_size 120M
+#php_flag register_globals off
+php_flag magic_quotes_gpc off
+php_value magic_quotes_gpc off
+#see: http://stackoverflow.com/questions/4096582/allowed-memory-size-of-x-bytes-exhausted, php -i | grep memory_limit
+php_value memory_limit 128M
+
+<IfModule mod_rewrite.c>
+
+RewriteEngine On
+
+    ## Begin - Rewrite rules to block out some common exploits.
+    # If you experience problems on your site block out the operations listed below
+    # This attempts to block the most common type of exploit `attempts` to Joomla!
+    # -> Taken from Joomla!...https://www.joomla.org/
+    #
+    # Block out any script trying to base64_encode data within the URL.
+    RewriteCond %{QUERY_STRING} base64_encode[^(]*\([^)]*\) [OR]
+    # Block out any script that includes a <script> tag in URL.
+    RewriteCond %{QUERY_STRING} (<|%3C)([^s]*s)+cript.*(>|%3E) [NC,OR]
+    # Block out any script trying to set a PHP GLOBALS variable via URL.
+    RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+    # Block out any script trying to modify a _REQUEST variable via URL.
+    RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+    # Return 403 Forbidden header and show the content of the root homepage
+    RewriteRule .* index.php [F]
+    #
+    ## End - Rewrite rules to block out some common exploits.
+
+#RewriteBase /
+#RewriteBase /localhost/sites/packages/wee-cms
+
+## Removes index.php from URLs
+#RewriteCond %{THE_REQUEST} ^GET.*index\.php [NC]
+## RewriteCond %{REQUEST_URI} !/system/.* [NC]
+#RewriteRule (.*?)index\.php/*(.*) /$1$2 [R=301,NE,L]
+
+# SSL
+#RewriteCond %{HTTPS} !^on$ [NC]
+#RewriteRule . https://%{HTTP_HOST}%{REQUEST_URI} [L]
+
+# WWW
+#RewriteCond %{HTTP_HOST} !^www\. [NC]
+#RewriteRule .* https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# NO WWW
+#RewriteCond %{HTTP_HOST} ^www\. [NC]
+#RewriteRule ^(.*)$ https://YourDomain/$1 [L,R=301]
+
+# Protection
+RewriteCond %{QUERY_STRING}   (.*)=https(.*)    [NC,OR]
+RewriteCond %{QUERY_STRING}   (.*)=http(.*)    [NC,OR]
+RewriteCond %{QUERY_STRING}   (.*)=ftp(.*)    [NC,OR]
+RewriteCond %{QUERY_STRING}   (.*)urlx=(.*)   [NC]
+RewriteRule ^(.*) - [F]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# URL rewrites :
+################
+
+# with params - Example:
+# RewriteRule ^category/([a-z0-9]+)/?$ /index.php?page_id=1&c_id=$1 [L,NC]
+# RewriteRule ^page/([a-z0-9]+)/?$ index.php?page_id=$1 [L,NC]
+
+# just scripts, if any -Example:
+# RewriteRule ^my-account/?$ /my-account.php [L,NC]
+# RewriteRule ^my-account/([a-z0-9]+)/?$ /index.php?account_id=$1 [L,NC]
+# RewriteRule ^edit-account /edit.php [L,NC]
+
+# page slugs
+# http://stackoverflow.com/questions/18547015/htaccess-rewrite-slug-to-seo-url
+# Example: RewriteRule ^about/? /index.php?page_id=2 [L,NC]
+# EN
+RewriteRule ^about /index.php?page_id=2 [L,NC]
+RewriteRule ^disclaimer /index.php?page_id=3 [L,NC]
+RewriteRule ^privacy /index.php?page_id=4 [L,NC]
+RewriteRule ^contact-info /index.php?page_id=5 [L,NC]
+RewriteRule ^terms /index.php?page_id=17 [L,NC]
+# DE
+#RewriteRule ^ueber /index.php?page_id=2 [L,NC]
+##RewriteRule ^dislaimer /index.php?page_id=3 [L,NC] -> the same in EN
+#RewriteRule ^datenschutzerklaerung /index.php?page_id=4 [L,NC]
+#RewriteRule ^impressum /index.php?page_id=5 [L,NC]
+#RewriteRule ^nutzungshinweise /index.php?page_id=17 [L,NC]
+
+# category + slugs - Example:
+#^works/(.*)$ works/show.php?slug=$1 [L]
+
+</IfModule>
