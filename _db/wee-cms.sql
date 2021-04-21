@@ -47,7 +47,7 @@ CREATE TABLE `uICxZ0_users` (
 --
 
 INSERT INTO `uICxZ0_users` (`user_id`, `user_name`, `user_password_hash`, `user_email`, `user_access_level`, `user_active`, `user_activation_hash`, `user_password_reset_hash`, `user_password_reset_timestamp`, `user_failed_logins`, `user_last_failed_login`, `user_registration_datetime`, `user_registration_ip`) VALUES
-(1, 'WeeCMSAdmin', '$2y$10$kYk2D9RRmnUK9og1Ru6VSuIlGg38iRdQ9UOVm.9/9bFLUrueB18EK', 'admin@weeCMS.wayoutofline.net', 'admin@weeCMS.wayoutofline.net', 9, 1, NULL, NULL, NULL, 0, NULL, '2017-05-10 16:45:59', '127.0.0.1');
+(1, 'WeeCMSAdmin', '$2y$10$kYk2D9RRmnUK9og1Ru6VSuIlGg38iRdQ9UOVm.9/9bFLUrueB18EK', 'admin@weeCMS.wayoutofline.net', 9, 1, NULL, NULL, NULL, 0, NULL, '2017-05-10 16:45:59', '127.0.0.1');
 
 -- --------------------------------------------------------
 
